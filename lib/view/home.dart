@@ -6,6 +6,7 @@ import 'package:news_c_kelompok4/view/view_list.dart';
 import 'package:news_c_kelompok4/view/profile/profile.dart';
 import 'package:sensors/sensors.dart';
 import 'package:screen_brightness/screen_brightness.dart';
+import 'package:news_c_kelompok4/view/about/about.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 void main() {
@@ -120,6 +121,7 @@ class _HomeViewState extends State<HomeView> {
                                 ],
                               ),
                             ),
+                            SizedBox(width: 20.0),  
                             ElevatedButton(
                               onPressed: () {
                                 print('Post News button pressed');
@@ -161,7 +163,11 @@ class _HomeViewState extends State<HomeView> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                print('Post News button pressed');
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AboutPage()),
+                                );
                               },
                               style: ElevatedButton.styleFrom(
                                 minimumSize: Size(screenSize.width * 0.4,
