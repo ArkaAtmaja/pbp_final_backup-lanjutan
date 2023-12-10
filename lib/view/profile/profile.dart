@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:responsive_sizer/responsive_sizer.dart'; // Import responsive_sizer
 import 'package:news_c_kelompok4/client/auth.dart';
 import 'package:news_c_kelompok4/model/user_model.dart';
+import 'package:news_c_kelompok4/view/about/about.dart';
 import 'dart:io';
 
 class ProfilView extends StatefulWidget {
@@ -51,9 +52,9 @@ class _ProfilViewState extends State<ProfilView> {
   }
 
   Future<void> editProfile(BuildContext context) async {
-  Navigator.push(context, MaterialPageRoute(builder: (context) => EditProfileView()));
-}
-
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => EditProfileView()));
+  }
 
   Future<void> loadUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -228,7 +229,8 @@ class _ProfilViewState extends State<ProfilView> {
                     ),
                     SizedBox(height: 3.h),
                     Padding(
-                      padding: EdgeInsets.only(left: 45.sp), // Adjusted for manual shifting
+                      padding: EdgeInsets.only(
+                          left: 45.sp), // Adjusted for manual shifting
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -238,7 +240,8 @@ class _ProfilViewState extends State<ProfilView> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 40.sp), // Adjusted for manual shifting
+                      padding: EdgeInsets.only(
+                          left: 40.sp), // Adjusted for manual shifting
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -248,7 +251,8 @@ class _ProfilViewState extends State<ProfilView> {
                       ),
                     ),
                     SizedBox(height: 1.h),
-                    Text('Posts', style: Theme.of(context).textTheme.headlineSmall),
+                    Text('Posts',
+                        style: Theme.of(context).textTheme.headlineSmall),
                     Text('100+', style: Theme.of(context).textTheme.bodyMedium),
                     SizedBox(height: 20.sp),
                     SizedBox(height: 3.h),
@@ -279,7 +283,13 @@ class _ProfilViewState extends State<ProfilView> {
                     SizedBox(
                       width: 50.w,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AboutPage()),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromARGB(255, 144, 141, 149),
                           shape: StadiumBorder(),
