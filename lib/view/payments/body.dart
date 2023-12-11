@@ -5,6 +5,7 @@ import 'package:news_c_kelompok4/view/payments/body.dart';
 import 'package:news_c_kelompok4/view/payments/modals_payement.dart';
 import 'package:news_c_kelompok4/view/payments/method/QR_view.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -13,8 +14,7 @@ class Body extends StatelessWidget {
     SizeConfig().init(context);
 
     return Container(
-      color:
-          Color(0xFFEBEBEB), // Atur warna latar belakang halaman menjadi EBEBEB
+      color: Color(0xFFEBEBEB),
       child: Column(
         children: [
           SizedBox(height: SizeConfig.screenHeight * 0.04),
@@ -22,7 +22,7 @@ class Body extends StatelessWidget {
             "lib/images/logo.png",
             height: SizeConfig.screenHeight * 0.33,
           ),
-          SizedBox(height: 16.0), // Tambahkan ruang sebelum teks besar
+          SizedBox(height: 16.0),
           Text(
             "Pro - Account" "\n",
             style: TextStyle(
@@ -37,19 +37,17 @@ class Body extends StatelessWidget {
             children: [
               Icon(
                 Icons.check,
-                color: Colors.purple, // Ganti warna ikon sesuai keinginan
-                size: getProportionateScreenWidth(
-                    18), // Atur ukuran ikon sesuai keinginan
+                color: Colors.purple,
+                size: getProportionateScreenWidth(18),
               ),
-              SizedBox(width: 8), // Tambahkan jarak antara ikon dan teks
+              SizedBox(width: 8),
               Text(
                 "\tPost News",
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(18),
                   fontWeight: FontWeight.normal,
                   color: Colors.black,
-                  decoration:
-                      TextDecoration.none, // Hapus garis kuning di bawah teks
+                  decoration: TextDecoration.none,
                 ),
               ),
             ],
@@ -83,11 +81,12 @@ class Body extends StatelessWidget {
     );
   }
 
-  Future _displayBottomSheet(BuildContext context) {
+  Future<void> _displayBottomSheet(BuildContext context) {
     return showModalBottomSheet(
       context: context,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
       builder: (context) => BottomSheetContent(),
     );
   }
@@ -98,7 +97,7 @@ class BottomSheetContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16.0),
-      height: 390, // Sesuaikan tinggi bottom sheet agar muat
+      height: 390,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -117,23 +116,20 @@ class BottomSheetContent extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 2.h),
             ),
             child: Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.spaceBetween, // Agar icon QR di pojok kiri
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.qr_code, color: Colors.white), // Added QR icon
+                Icon(Icons.qr_code, color: Colors.white),
                 Text(
                   'Pembayaran QRIS',
                   style: TextStyle(fontSize: 14.0),
                 ),
-                SizedBox(width: 24.0), // Memberi ruang antara teks dan ikon
+                SizedBox(width: 24.0),
               ],
             ),
           ),
           _buildButton('Shopee Pay', Colors.orange, Icons.shop),
           _buildButton('Gopay', Colors.green, Icons.motorcycle),
-          SizedBox(
-              height:
-                  10.0), // Tambahkan sedikit ruang di antara button dan subtotal
+          SizedBox(height: 10.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -150,8 +146,8 @@ class BottomSheetContent extends StatelessWidget {
           SizedBox(height: 20.0),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pop(); // Close the bottom sheet
-              pushShowModalSPayNow(context);
+              Navigator.of(context).pop();
+              _confirmSave(context);
             },
             style: ElevatedButton.styleFrom(
               primary: Color(0xFFA95C8D),
@@ -173,7 +169,6 @@ class BottomSheetContent extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: 8.0),
       child: ElevatedButton(
         onPressed: () {
-          // Implement action for each button
           print('Button pressed: $label');
         },
         style: ElevatedButton.styleFrom(
@@ -182,13 +177,12 @@ class BottomSheetContent extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20.0),
           ),
-          padding: EdgeInsets.symmetric(
-              vertical: 1.h, horizontal: 2.h), // Sesuaikan nilai padding
+          padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 2.h),
         ),
         child: Row(
           children: [
             Icon(iconData),
-            SizedBox(width: 8.0), // Sesuaikan jarak antara ikon dan teks
+            SizedBox(width: 8.0),
             Expanded(
               child: Text(
                 label,
@@ -203,7 +197,42 @@ class BottomSheetContent extends StatelessWidget {
   }
 }
 
-void pushShowModalSPayNow(BuildContext context) {
+Future<void> _confirmSave(BuildContext context) async {
+  return showDialog<void>(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('Konfirmasi'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text('Apakah Anda yakin ingin membayar?'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Tidak'),
+            onPressed: () {
+              Navigator.of(context).pop();
+              _showToast("Pembayaran gagal", false);
+            },
+          ),
+          TextButton(
+            child: Text('Ya'),
+            onPressed: () {
+              Navigator.of(context).pop();
+              _pushShowModalSPayNow(context);
+              _showToast("Pembayaran berhasil", true);
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+void _pushShowModalSPayNow(BuildContext context) {
   PaymentDetailsModal.show(context);
 }
 
@@ -213,5 +242,17 @@ void pushShowQRIS(BuildContext context) {
     MaterialPageRoute(
       builder: (_) => BarcodeScreen(),
     ),
+  );
+}
+
+void _showToast(String message, bool isSuccess) {
+  Fluttertoast.showToast(
+    msg: message,
+    toastLength: Toast.LENGTH_SHORT,
+    gravity: ToastGravity.BOTTOM,
+    timeInSecForIosWeb: 1,
+    backgroundColor: isSuccess ? Colors.green : Colors.red,
+    textColor: Colors.white,
+    fontSize: 16.0,
   );
 }

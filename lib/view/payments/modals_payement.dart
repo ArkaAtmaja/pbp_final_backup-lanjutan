@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:news_c_kelompok4/addNews/home_screen.dart';
 import 'package:news_c_kelompok4/view/payments/pdf/pdf_view.dart';
 import 'package:news_c_kelompok4/view/payments/pdf/invoice/model/product.dart';
+import 'package:news_c_kelompok4/view/home.dart';
 import 'dart:io';
 import 'package:uuid/uuid.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:news_c_kelompok4/view/home.dart';
 
 class PaymentDetailsModal extends StatefulWidget {
   const PaymentDetailsModal({Key? key}) : super(key: key);
@@ -106,7 +109,7 @@ class PaymentDetailsContent extends StatelessWidget {
           SizedBox(height: 8.0),
           GestureDetector(
             onTap: () {
-              PushPDF_View(context);
+              createPdf(id, context, products);
             },
             child: buildText('Detail', TextAlign.left, color: Colors.blue),
           ),
@@ -115,7 +118,10 @@ class PaymentDetailsContent extends StatelessWidget {
             alignment: Alignment.bottomRight,
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Tutup modal
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeView()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 primary: Color(0xFFA95C8D),
@@ -148,13 +154,4 @@ class PaymentDetailsContent extends StatelessWidget {
       ),
     );
   }
-}
-
-void PushPDF_View(BuildContext context) {
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (_) => PDFView(),
-    ),
-  );
 }

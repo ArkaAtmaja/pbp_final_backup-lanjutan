@@ -7,6 +7,7 @@ import 'package:responsive_sizer/responsive_sizer.dart'; // Import responsive_si
 import 'package:news_c_kelompok4/client/auth.dart';
 import 'package:news_c_kelompok4/model/user_model.dart';
 import 'package:news_c_kelompok4/view/about/about.dart';
+import 'package:news_c_kelompok4/view/payments/body.dart';
 import 'dart:io';
 
 class ProfilView extends StatefulWidget {
@@ -371,7 +372,11 @@ class _ProfilViewState extends State<ProfilView> {
                       width: 50.w,
                       child: ElevatedButton(
                         onPressed: () {
-                          // pushShowPayment(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Body()),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromARGB(255, 168, 28, 133),
