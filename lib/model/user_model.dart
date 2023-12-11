@@ -8,6 +8,8 @@ class User {
   String tanggalLahir;
   String noTelp;
   String gender;
+  String? imageProfile;
+  String? imageSampul;
 
   User(
       {required this.id,
@@ -17,6 +19,8 @@ class User {
       required this.tanggalLahir,
       required this.noTelp,
       required this.gender,
+      this.imageProfile,
+      this.imageSampul
       });
 
   factory User.fromRawJson(String str) => User.fromRawJson(json.decode(str));
@@ -28,6 +32,8 @@ class User {
         tanggalLahir: json["tanggalLahir"],
         noTelp: json["noTelp"],
         gender: json["gender"],
+        imageProfile: json["imageProfile"] != null ? json["imageProfile"] : "",
+        imageSampul: json["imageSampul"] != null ? json["imageSampul"] : "",
       );
 
   String toRawJson() => json.encode(toJson());
@@ -38,6 +44,8 @@ class User {
         "password": password,
         "tanggalLahir": tanggalLahir,
         "noTelp": noTelp,
-        "gender": gender
+        "gender": gender,
+        "imageProfile" : imageProfile,
+        "imageSampul" : imageSampul,
       };
 }

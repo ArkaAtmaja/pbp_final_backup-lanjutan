@@ -21,7 +21,9 @@ class _ProfilViewState extends State<ProfilView> {
   bool _isPasswordVisible = false;
   late String username = 'NULL';
   String selectedImagePath = '';
-  String profileImg = '';
+  String selectedImagePath2 = '';
+  String imageProfile = '';
+  String imageSampul = '';
   int userID = 0;
 
   late TextEditingController usernameController;
@@ -83,6 +85,8 @@ class _ProfilViewState extends State<ProfilView> {
       noTelp: noTelp,
       tanggalLahir: date,
       gender: gender,
+      imageProfile: imageProfile,
+      imageSampul: imageSampul,
     );
     await UserClient.update(input);
 
@@ -191,7 +195,8 @@ class _ProfilViewState extends State<ProfilView> {
                 tanggalLahirController.text = userDataMap['tanggalLahir'] ?? '';
                 noTelpController.text = userDataMap['noTelp'] ?? '';
                 genderController.text = userDataMap['gender'] ?? '';
-                profileImg = userDataMap['img'] ?? '';
+                imageProfile = userDataMap['imgProfile'] ?? '';
+                imageSampul = userDataMap['imgSampul'] ?? '';
               } else {
                 print('User data is null or status is false');
               }
@@ -199,33 +204,65 @@ class _ProfilViewState extends State<ProfilView> {
               return SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(150.sp),
-                      child: selectedImagePath.isNotEmpty
-                          ? Image.file(
-                              File(selectedImagePath),
-                              height: 30.h,
-                              width: 70.w,
-                              fit: BoxFit.fill,
-                            )
-                          : profileImg.isNotEmpty
+                    Stack(
+                      clipBehavior: Clip.none,
+                      alignment: Alignment.center,
+                      children: <Widget>[
+                        Container(
+                          decoration: BoxDecoration(),
+                          child: selectedImagePath2.isNotEmpty
                               ? Image.file(
-                                  File(profileImg),
-                                  height: 30.h,
-                                  width: 70.w,
+                                  File(selectedImagePath2),
+                                  height: 20.h,
+                                  width: 100.w,
                                   fit: BoxFit.fill,
                                 )
-                              : Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(150.sp),
-                                  ),
-                                  child: Image.asset(
-                                    './images/def_image.jpg',
-                                    height: 30.h,
-                                    width: 70.w,
+                              : imageSampul.isNotEmpty
+                                  ? Image.file(
+                                      File(imageSampul),
+                                      height: 20.h,
+                                      width: 200.w,
+                                      fit: BoxFit.fill,
+                                    )
+                                  : Image.asset(
+                                      'lib/images/cuaca.jpg',
+                                      height: 20.h,
+                                      width: 100.w,
+                                      fit: BoxFit.fill,
+                                    ),
+                        ),
+                        Positioned(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(150.sp),
+                            child: selectedImagePath.isNotEmpty
+                                ? Image.file(
+                                    File(selectedImagePath),
+                                    height: 15.h,
+                                    width: 35.w,
                                     fit: BoxFit.fill,
-                                  ),
-                                ),
+                                  )
+                                : imageProfile.isNotEmpty
+                                    ? Image.file(
+                                        File(imageProfile),
+                                        height: 15.h,
+                                        width: 35.w,
+                                        fit: BoxFit.fill,
+                                      )
+                                    : Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(150.sp),
+                                        ),
+                                        child: Image.asset(
+                                          'lib/images/fotoProfil/user1.jpg',
+                                          height: 15.h,
+                                          width: 35.w,
+                                          fit: BoxFit.fill,
+                                        ),
+                                      ),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 3.h),
                     Padding(
