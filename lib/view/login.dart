@@ -126,10 +126,10 @@ class LoginViewState extends State<LoginView> {
                       user = await UserClient.login(
                           usernameController.text, passwordController.text);
                       Fluttertoast.showToast(
-                        msg: "Login Sukses",
+                        msg: "Login Berhasil",
                         toastLength: Toast.LENGTH_SHORT,
                         gravity: ToastGravity.BOTTOM,
-                        backgroundColor: Colors.blue,
+                        backgroundColor: Colors.green,
                         textColor: Colors.white,
                       );
                       await saveLoginStatus();

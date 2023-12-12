@@ -32,8 +32,8 @@ class User {
         tanggalLahir: json["tanggalLahir"],
         noTelp: json["noTelp"],
         gender: json["gender"],
-        imageProfile: json["imageProfile"] != null ? json["imageProfile"] : "",
-        imageSampul: json["imageSampul"] != null ? json["imageSampul"] : "",
+        imageProfile: json["imageProfile"] ?? "",
+        imageSampul: json["imageSampul"] ?? "",
       );
 
   String toRawJson() => json.encode(toJson());

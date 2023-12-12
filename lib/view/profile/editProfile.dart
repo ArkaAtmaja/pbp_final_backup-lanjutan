@@ -5,7 +5,9 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:news_c_kelompok4/client/auth.dart';
 import 'package:news_c_kelompok4/model/user_model.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:dio/dio.dart';
 
 class EditProfileView extends StatefulWidget {
   const EditProfileView({Key? key});
@@ -54,6 +56,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       username = prefs.getString('username') ?? '';
+      userID = prefs.getInt('userID') ?? 0;
     });
   }
 
@@ -74,7 +77,6 @@ class _EditProfileViewState extends State<EditProfileView> {
       String imageSampul =
           selectedImagePath2.isNotEmpty ? selectedImagePath2 : "";
       print('USER ID: ${userID} ');
-
 
       User input = User(
         id: userID,
@@ -115,7 +117,12 @@ class _EditProfileViewState extends State<EditProfileView> {
     } catch (e) {
       // Print the error for debugging
       print('Error updating user data: $e');
-      // You might want to show an error message to the user here
+      if (e is DioError) {
+        print('DioError response: ${e.response}');
+      } else {
+        print('Unexpected error: $e');
+      }
+      return Future.error(e.toString());
     }
   }
 
@@ -156,7 +163,7 @@ class _EditProfileViewState extends State<EditProfileView> {
     _updateUserData();
 
     setState(() {
-     _updateUserData();
+      _updateUserData();
     });
   }
 

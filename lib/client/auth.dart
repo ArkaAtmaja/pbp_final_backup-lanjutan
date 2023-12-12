@@ -111,7 +111,6 @@ class UserClient {
           body: user.toRawJson());
 
       if (response.statusCode != 200) throw Exception(response.reasonPhrase);
-
       return response;
     } catch (e) {
       return Future.error(e.toString());

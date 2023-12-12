@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:news_c_kelompok4/view/profile/editprofile.dart';
+import 'package:news_c_kelompok4/view/settings/settings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:responsive_sizer/responsive_sizer.dart'; // Import responsive_sizer
+import 'package:responsive_sizer/responsive_sizer.dart'; 
 import 'package:news_c_kelompok4/client/auth.dart';
 import 'package:news_c_kelompok4/model/user_model.dart';
 import 'package:news_c_kelompok4/view/about/about.dart';
@@ -349,7 +350,13 @@ class _ProfilViewState extends State<ProfilView> {
                     SizedBox(
                       width: 50.w,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PaymentDetailScreen()),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromARGB(255, 144, 141, 149),
                           shape: StadiumBorder(),
